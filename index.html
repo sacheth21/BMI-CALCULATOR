@@ -1,86 +1,1884 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>BMI Calculator - by KU Sacheth</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
- 
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>G-LABS | Innovation & Development</title>
+  <meta name="description" content="G-LABS - A showcase of innovative projects and development work by K U SACHETH">
+  <meta name="keywords" content="web development, projects, portfolio, innovation, coding">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  
   <style>
+    :root {
+      --primary-color: #4154f1;
+      --secondary-color: #717ff5;
+      --accent-color: #ff6b6b;
+      --text-color: #444444;
+      --light-bg: #f6f9ff;
+      --dark-bg: #0f2945;
+      --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      background: linear-gradient(to right, #4facfe, #00f2fe);
+      font-family: "Roboto", sans-serif;
+      color: var(--text-color);
+      overflow-x: hidden;
+      background-color: #f8f9fa;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Poppins", sans-serif;
+      font-weight: 700;
+    }
+    
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      padding: 15px 0;
+      z-index: 1000;
+      position: fixed;
+      width: 100%;
+      top: 0;
+    }
+    
+    .header.sticked {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 10px 0;
+    }
+    
+    .logo h1 {
+      font-size: 32px;
+      font-weight: 800;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      line-height: 1;
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: -1px;
+    }
+    
+    .navmenu ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+      align-items: center;
+    }
+    
+    .navmenu li {
+      position: relative;
+      margin: 0 10px;
+    }
+    
+    .navmenu a, .navmenu a:focus {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      font-family: "Poppins", sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-color);
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      position: relative;
+      text-decoration: none;
+    }
+    
+    .navmenu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+    
+    .navmenu a:hover::after, .navmenu .active::after {
+      width: 100%;
+    }
+    
+    .navmenu a:hover, .navmenu .active, .navmenu .active:focus, .navmenu li:hover > a {
+      color: var(--primary-color);
+    }
+    
+    .dropdown ul {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      background: white;
+      box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      transform: translateY(10px);
+      min-width: 200px;
+    }
+    
+    .dropdown:hover > ul {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .dropdown ul li {
+      margin: 0;
+    }
+    
+    .dropdown ul a {
+      padding: 10px 20px;
+      font-size: 14px;
+      text-transform: none;
+      color: var(--text-color);
+      text-decoration: none;
+    }
+    
+    .dropdown ul a:hover, .dropdown ul .active:hover, .dropdown ul li:hover > a {
+      color: var(--primary-color);
+    }
+    
+    .dropdown ul a::after {
+      display: none;
+    }
+    
+    .hero {
+      width: 100%;
       min-height: 100vh;
+      position: relative;
+      padding: 120px 0 60px 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(rgba(15, 41, 69, 0.8), rgba(15, 41, 69, 0.9)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
-    .bmi-card {
-      background-color: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+    
+    .hero .container {
+      position: relative;
+      z-index: 3;
+    }
+    
+    .hero h2 {
+      margin: 0;
+      font-size: 64px;
+      font-weight: 900;
+      color: #fff;
+      font-family: "Montserrat", sans-serif;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .hero h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--accent-color);
+      border-radius: 2px;
+    }
+    
+    .hero p {
+      margin: 20px 0 30px;
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .hero .btn-get-started {
+      margin-top: 30px;
+      line-height: 0;
+      padding: 18px 40px;
+      border-radius: 50px;
+      transition: all 0.5s ease;
+      color: #fff;
+      background: var(--gradient-2);
+      font-size: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .hero .btn-get-started::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      z-index: -1;
+      transition: all 0.3s ease;
+      transform: translateX(-100%);
+    }
+    
+    .hero .btn-get-started:hover::before {
+      transform: translateX(0);
+    }
+    
+    .hero .btn-get-started:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(245, 87, 108, 0.5);
+      color: #fff;
+    }
+    
+    .animated-text {
+      display: inline-block;
+      position: relative;
+    }
+    
+    .animated-text::after {
+      content: '|';
+      position: absolute;
+      right: -10px;
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    .section {
+      padding: 100px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .section-title {
+      text-align: center;
+      padding-bottom: 50px;
+      position: relative;
+    }
+    
+    .section-title h2 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      position: relative;
+      color: var(--dark-bg);
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: -1px;
+    }
+    
+    .section-title h2:after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-2);
+      bottom: 0;
+      left: calc(50% - 30px);
+      border-radius: 2px;
+    }
+    
+    .section-title p {
+      font-size: 18px;
+      color: #6c757d;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .about .content h3 {
+      font-weight: 700;
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: var(--dark-bg);
+    }
+    
+    .about .content p {
+      margin-bottom: 25px;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    
+    .about .content ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .about .content ul li {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .about .content ul strong {
+      margin-right: 10px;
+      font-weight: 600;
+      color: var(--dark-bg);
+    }
+    
+    .about .content ul i {
+      font-size: 16px;
+      margin-right: 10px;
+      color: var(--primary-color);
+      line-height: 0;
+    }
+    
+    .about .about-img {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .about .about-img::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--gradient-1);
+      opacity: 0.8;
+      z-index: 1;
+      mix-blend-mode: multiply;
+    }
+    
+    .about .about-img img {
+      transition: all 0.5s ease;
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .about .about-img:hover img {
+      transform: scale(1.05);
+    }
+    
+    .skills .progress {
+      height: 70px;
+      display: block;
+      background: none;
+      border-radius: 0;
+      margin-bottom: 30px;
+    }
+    
+    .skills .progress .skill {
+      padding: 0;
+      margin: 0 0 10px 0;
+      text-transform: uppercase;
+      display: block;
+      font-weight: 600;
+      font-family: "Poppins", sans-serif;
+      color: var(--dark-bg);
+      font-size: 16px;
+    }
+    
+    .skills .progress .skill .val {
+      float: right;
+      font-style: normal;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+    
+    .skills .progress-bar-wrap {
+      background: #e9ecef;
+      height: 12px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .skills .progress-bar {
+      height: 12px;
+      transition: 1.5s;
+      background: var(--gradient-1);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      width: 0;
+    }
+    
+    .skills .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, .2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .2) 50%,
+        rgba(255, 255, 255, .2) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 30px 30px;
+      animation: move 2s linear infinite;
+    }
+    
+    @keyframes move {
+      0% { background-position: 0 0; }
+      100% { background-position: 30px 30px; }
+    }
+    
+    .projects .portfolio-item {
+      margin-bottom: 30px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .projects .portfolio-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .projects #portfolio-flters {
+      padding: 0;
+      margin: 0 auto 40px auto;
+      list-style: none;
+      text-align: center;
+    }
+    
+    .projects #portfolio-flters li {
+      cursor: pointer;
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--text-color);
+      margin: 0 5px 10px 5px;
+      transition: all ease-in-out 0.3s;
+      border-radius: 50px;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .projects #portfolio-flters li:hover, .projects #portfolio-flters li.filter-active {
+      color: #fff;
+      background: var(--gradient-2);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(245, 87, 108, 0.3);
+    }
+    
+    .projects .portfolio-wrap {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .projects .portfolio-wrap::before {
+      content: "";
+      background: rgba(255, 255, 255, 0.85);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      transition: 0.4s;
+      z-index: 2;
+      opacity: 0;
+    }
+    
+    .projects .portfolio-wrap .portfolio-info {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      transition: all ease-in-out 0.4s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-start;
       padding: 30px;
-      max-width: 450px;
+    }
+    
+    .projects .portfolio-wrap .portfolio-info h4 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark-bg);
+      margin-bottom: 10px;
+    }
+    
+    .projects .portfolio-wrap .portfolio-info p {
+      color: #5a6c7d;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .projects .portfolio-wrap .portfolio-links {
+      text-align: center;
+      z-index: 4;
+    }
+    
+    .projects .portfolio-wrap .portfolio-links a {
+      color: #fff;
+      background: var(--gradient-2);
+      position: absolute;
+      right: 30px;
+      bottom: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.3s;
+      opacity: 0;
+      box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+      text-decoration: none;
+    }
+    
+    .projects .portfolio-wrap:hover::before {
+      opacity: 1;
+    }
+    
+    .projects .portfolio-wrap:hover .portfolio-info {
+      opacity: 1;
+    }
+    
+    .projects .portfolio-wrap:hover .portfolio-links a {
+      opacity: 1;
+    }
+    
+    .contact .info-item {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      height: 100%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      margin-bottom: 20px;
+    }
+    
+    .contact .info-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .contact .info-item i {
+      font-size: 28px;
+      color: var(--primary-color);
+      float: left;
+      width: 60px;
+      height: 60px;
+      background: rgba(65, 84, 241, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+      transition: all 0.3s ease-in-out;
+      margin-bottom: 20px;
+    }
+    
+    .contact .info-item h4 {
+      padding: 0;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark-bg);
+    }
+    
+    .contact .info-item p {
+      padding: 0;
+      margin-bottom: 0;
+      font-size: 16px;
+      color: #5a6c7d;
+      line-height: 1.6;
+    }
+    
+    .contact .info-item:hover i {
+      background: var(--gradient-1);
+      color: #fff;
+      transform: scale(1.1);
+    }
+    
+    .contact .php-email-form {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .contact .php-email-form .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .contact .php-email-form input, .contact .php-email-form textarea {
+      border-radius: 10px;
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      font-size: 16px;
+      transition: all 0.3s ease;
       width: 100%;
     }
-    .bmi-result {
-      font-size: 2rem;
-      font-weight: 600;
-      color: #007bff;
+    
+    .contact .php-email-form input:focus, .contact .php-email-form textarea:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(65, 84, 241, 0.1);
+      outline: none;
     }
-    .bmi-category {
-      font-size: 1.1rem;
-      margin-top: 5px;
-      color: #555;
+    
+    .contact .php-email-form button[type="submit"] {
+      background: var(--gradient-2);
+      border: 0;
+      padding: 15px 40px;
+      color: #fff;
+      transition: 0.4s;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+    }
+    
+    .contact .php-email-form button[type="submit"]:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(245, 87, 108, 0.4);
+    }
+    
+    .footer {
+      font-size: 16px;
+      background: var(--dark-bg);
+      padding: 70px 0 30px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .footer .footer-top {
+      padding-bottom: 40px;
+    }
+    
+    .footer .footer-info .logo h1 {
+      font-size: 32px;
+      margin: 0;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .footer .footer-info p {
+      font-size: 16px;
+      line-height: 24px;
+      margin-bottom: 0;
+      font-family: "Roboto", sans-serif;
+    }
+    
+    .footer .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 18px;
+      margin-right: 10px;
+      color: rgba(255, 255, 255, 0.7);
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    
+    .footer .social-links a:hover {
+      background: var(--primary-color);
+      color: #fff;
+    }
+    
+    .footer h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      position: relative;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .footer h4::after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: var(--accent-color);
+      bottom: 0;
+      left: 0;
+    }
+    
+    .footer .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .footer .footer-links ul li {
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .footer .footer-links ul li:first-child {
+      padding-top: 0;
+    }
+    
+    .footer .footer-links ul a {
+      color: rgba(255, 255, 255, 0.7);
+      transition: 0.3s;
+      display: inline-block;
+      line-height: 1;
+      text-decoration: none;
+    }
+    
+    .footer .footer-links ul a:hover {
+      color: #fff;
+      padding-left: 5px;
+    }
+    
+    .footer .footer-contact p {
+      margin-bottom: 10px;
+      line-height: 26px;
+    }
+    
+    .footer .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer .credits {
+      padding-top: 10px;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .footer .credits a {
+      color: rgba(255, 255, 255, 0.7);
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    
+    .footer .credits a:hover {
+      color: #fff;
+    }
+    
+    #scroll-top {
+      position: fixed;
+      right: 30px;
+      bottom: 30px;
+      z-index: 99;
+      font-size: 24px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--gradient-2);
+      color: #fff;
+      transition: all 0.4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      box-shadow: 0 10px 25px rgba(245, 87, 108, 0.3);
+      text-decoration: none;
+    }
+    
+    #scroll-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    #scroll-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(245, 87, 108, 0.4);
+    }
+    
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 9999;
+      overflow: hidden;
+      background: #fff;
+    }
+    
+    #preloader:before {
+      content: "";
+      position: fixed;
+      top: calc(50% - 30px);
+      left: calc(50% - 30px);
+      border: 6px solid var(--primary-color);
+      border-top-color: #fff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: animate-preloader 1s linear infinite;
+    }
+    
+    @keyframes animate-preloader {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    
+    .fade-in.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Services Section */
+    .services .service-item {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      height: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    
+    .services .service-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient-1);
+      transform: translateX(-100%);
+      transition: all 0.5s ease;
+    }
+    
+    .services .service-item:hover::before {
+      transform: translateX(0);
+    }
+    
+    .services .service-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .services .service-item .icon {
+      margin-bottom: 20px;
+      width: 70px;
+      height: 70px;
+      background: rgba(65, 84, 241, 0.1);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: var(--primary-color);
+      transition: all 0.3s ease;
+    }
+    
+    .services .service-item:hover .icon {
+      background: var(--gradient-1);
+      color: #fff;
+      transform: scale(1.1);
+    }
+    
+    .services .service-item h3 {
+      font-weight: 700;
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: var(--dark-bg);
+    }
+    
+    .services .service-item p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #6c757d;
+      margin-bottom: 0;
+    }
+    
+    /* Testimonials Section */
+    .testimonials .testimonial-item {
+      background: #fff;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      height: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+    
+    .testimonials .testimonial-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .testimonials .testimonial-item .stars {
+      margin-bottom: 15px;
+    }
+    
+    .testimonials .testimonial-item .stars i {
+      color: #ffc107;
+      font-size: 18px;
+    }
+    
+    .testimonials .testimonial-item p {
+      font-style: italic;
+      margin-bottom: 25px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #6c757d;
+    }
+    
+    .testimonials .testimonial-item .testimonial-content {
+      display: flex;
+      align-items: center;
+    }
+    
+    .testimonials .testimonial-item img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin-right: 20px;
+      border: 3px solid #fff;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+    
+    .testimonials .testimonial-item h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--dark-bg);
+    }
+    
+    .testimonials .testimonial-item h4 {
+      font-size: 14px;
+      color: #6c757d;
+      margin: 0;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 42px;
+      }
+      
+      .hero p {
+        font-size: 20px;
+      }
+      
+      .section {
+        padding: 70px 0;
+      }
+      
+      .section-title h2 {
+        font-size: 32px;
+      }
+      
+      .navmenu ul {
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: none;
+      }
+      
+      .navmenu ul.active {
+        display: flex;
+      }
+      
+      .mobile-nav-toggle {
+        display: block !important;
+      }
+    }
+    
+    .mobile-nav-toggle {
+      display: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    
+    /* Counter Section */
+    .counter {
+      background: var(--gradient-1);
+      padding: 80px 0;
+      color: #fff;
+    }
+    
+    .counter .counter-item {
+      text-align: center;
+    }
+    
+    .counter .counter-item span {
+      font-size: 48px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 15px;
+    }
+    
+    .counter .counter-item p {
+      font-size: 18px;
+      margin: 0;
+    }
+    
+    /* Blog Section */
+    .blog .blog-item {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      margin-bottom: 30px;
+    }
+    
+    .blog .blog-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .blog .blog-img {
+      height: 250px;
+      overflow: hidden;
+    }
+    
+    .blog .blog-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s ease;
+    }
+    
+    .blog .blog-item:hover .blog-img img {
+      transform: scale(1.1);
+    }
+    
+    .blog .blog-content {
+      padding: 30px;
+    }
+    
+    .blog .blog-content h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--dark-bg);
+    }
+    
+    .blog .blog-content p {
+      margin-bottom: 20px;
+      color: #6c757d;
+    }
+    
+    .blog .blog-content .read-more {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+    
+    .blog .blog-content .read-more i {
+      margin-left: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .blog .blog-content .read-more:hover {
+      color: var(--secondary-color);
+    }
+    
+    .blog .blog-content .read-more:hover i {
+      transform: translateX(5px);
     }
   </style>
-
 </head>
-<body>
-
-  <div class="bmi-card text-center">
-    <h2 class="mb-4">BMI Calculator</h2>
-    <form id="bmiForm">
-      <div class="mb-3">
-        <label for="height" class="form-label">Height (in cm)</label>
-        <input type="number" class="form-control" id="height" required placeholder="e.g., 170" />
-      </div>
-      <div class="mb-3">
-        <label for="weight" class="form-label">Weight (in kg)</label>
-        <input type="number" class="form-control" id="weight" required placeholder="e.g., 65" />
-      </div>
-      <button type="submit" class="btn btn-primary w-100">Calculate</button>
-    </form>
-
-    <div class="mt-4">
-      <div id="bmiResult" class="bmi-result"></div>
-      <div id="bmiCategory" class="bmi-category"></div>
+<body class="index-page">
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <a href="index.html" class="logo d-flex align-items-center">
+        <h1 class="sitename">G-LABS</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li class="dropdown"><a href="#"><span>Projects</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="https://sacheth21.github.io/BMI-CALCULATOR/">BMI Calculator</a></li>
+              <li><a href="#">Project 2</a></li>
+              <li><a href="#">Project 3</a></li>
+              <li><a href="#">Project 4</a></li>
+            </ul>
+          </li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
     </div>
-  </div>
+  </header>
 
+  <main class="main">
+    <!-- Hero Section -->
+    <section id="hero" class="hero section dark-background">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <h2>Welcome to <span class="animated-text">G-LABS</span></h2>
+            <p>INNOVATION & DEVELOPMENT BY K U SACHETH</p>
+            <a href="#about" class="btn-get-started">Get Started</a>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6 content">
+            <h2>About G-LABS</h2>
+            <p>
+              G-LABS is a digital innovation hub where creativity meets technology. We specialize in developing cutting-edge solutions that address real-world challenges.
+            </p>
+            <p>
+              Founded by K U SACHETH, our mission is to push the boundaries of what's possible through code, design, and innovative thinking.
+            </p>
+            <div class="row">
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Founded:</strong> <span>2023</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Specialization:</strong> <span>Web Development</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Projects:</strong> <span>10+ Completed</span></li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Technologies:</strong> <span>HTML, CSS, JS</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Frameworks:</strong> <span>Bootstrap, React</span></li>
+                  <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong> <span>contact@glabs.com</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="about-img">
+              <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" class="img-fluid" alt="About G-LABS">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /About Section -->
+    
+    <!-- Counter Section -->
+    <section class="counter section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6">
+            <div class="counter-item">
+              <span class="counter-value">10</span>
+              <p>Projects Completed</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="counter-item">
+              <span class="counter-value">15</span>
+              <p>Happy Clients</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="counter-item">
+              <span class="counter-value">8</span>
+              <p>Awards Won</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="counter-item">
+              <span class="counter-value">24</span>
+              <p>Cups of Coffee</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Counter Section -->
+    
+    <!-- Services Section -->
+    <section id="services" class="services section">
+      <div class="container section-title">
+        <h2>Services</h2>
+        <p>What I offer to my clients</p>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="icon">
+                <i class="bi bi-code-slash"></i>
+              </div>
+              <h3>Web Development</h3>
+              <p>Custom web applications built with modern technologies and best practices.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="icon">
+                <i class="bi bi-palette"></i>
+              </div>
+              <h3>UI/UX Design</h3>
+              <p>Beautiful, intuitive interfaces that provide exceptional user experiences.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="icon">
+                <i class="bi bi-phone"></i>
+              </div>
+              <h3>Responsive Design</h3>
+              <p>Mobile-first approach ensuring your site looks perfect on all devices.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="icon">
+                <i class="bi bi-graph-up"></i>
+              </div>
+              <h3>Performance Optimization</h3>
+              <p>Speed and performance enhancements to improve user experience and SEO.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="icon">
+                <i class="bi bi-bag-check"></i>
+              </div>
+              <h3>E-commerce Solutions</h3>
+              <p>Complete online stores with payment integration and inventory management.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="service-item">
+              <div class="icon">
+                <i class="bi bi-megaphone"></i>
+              </div>
+              <h3>Digital Marketing</h3>
+              <p>Strategies to increase your online presence and reach your target audience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Services Section -->
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills section">
+      <div class="container section-title">
+        <h2>Skills</h2>
+        <p>My technical expertise and competencies</p>
+      </div>
+      <div class="container">
+        <div class="row skills-content skills-animation">
+          <div class="col-lg-6">
+            <div class="progress">
+              <span class="skill">HTML <i class="val">95%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="progress">
+              <span class="skill">CSS <i class="val">90%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="progress">
+              <span class="skill">JavaScript <i class="val">75%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="progress">
+              <span class="skill">Bootstrap <i class="val">85%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="progress">
+              <span class="skill">React <i class="val">70%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+            <div class="progress">
+              <span class="skill">UI/UX Design <i class="val">80%</i></span>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Skills Section -->
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects section">
+      <div class="container section-title">
+        <h2>Projects</h2>
+        <p>Check out some of my recent work</p>
+      </div>
+      <div class="container">
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+          <ul class="portfolio-filters isotope-filters">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-app">Applications</li>
+            <li data-filter=".filter-web">Web</li>
+            <li data-filter=".filter-tools">Tools</li>
+          </ul>
+          <div class="row gy-4 isotope-container">
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <div class="portfolio-wrap">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" class="img-fluid" alt="BMI Calculator">
+                <div class="portfolio-info">
+                  <h4>BMI Calculator</h4>
+                  <p>Health & Fitness</p>
+                  <div class="portfolio-links">
+                    <a href="https://sacheth21.github.io/BMI-CALCULATOR/" title="More Details"><i class="bi bi-link-45deg"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-web">
+              <div class="portfolio-wrap">
+                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=800&q=80" class="img-fluid" alt="Portfolio Website">
+                <div class="portfolio-info">
+                  <h4>Portfolio Website</h4>
+                  <p>Web Development</p>
+                  <div class="portfolio-links">
+                    <a href="#" title="More Details"><i class="bi bi-link-45deg"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-tools">
+              <div class="portfolio-wrap">
+                <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?auto=format&fit=crop&w=800&q=80" class="img-fluid" alt="Task Manager">
+                <div class="portfolio-info">
+                  <h4>Task Manager</h4>
+                  <p>Productivity Tool</p>
+                  <div class="portfolio-links">
+                    <a href="#" title="More Details"><i class="bi bi-link-45deg"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Projects Section -->
+    
+    <!-- Blog Section -->
+    <section id="blog" class="blog section">
+      <div class="container section-title">
+        <h2>Latest Blog</h2>
+        <p>Insights and updates from my work</p>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6">
+            <div class="blog-item">
+              <div class="blog-img">
+                <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80" alt="Blog 1">
+              </div>
+              <div class="blog-content">
+                <h3>10 Web Design Trends for 2023</h3>
+                <p>Discover the latest trends shaping the web design industry this year.</p>
+                <a href="#" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="blog-item">
+              <div class="blog-img">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Blog 2">
+              </div>
+              <div class="blog-content">
+                <h3>Optimizing Website Performance</h3>
+                <p>Learn how to make your website load faster and improve user experience.</p>
+                <a href="#" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="blog-item">
+              <div class="blog-img">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Blog 3">
+              </div>
+              <div class="blog-content">
+                <h3>The Future of Responsive Design</h3>
+                <p>Exploring new approaches to creating websites that work on all devices.</p>
+                <a href="#" class="read-more">Read More <i class="bi bi-arrow-right"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Blog Section -->
+    
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+      <div class="container section-title">
+        <h2>Testimonials</h2>
+        <p>What my clients say about me</p>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6">
+            <div class="testimonial-item">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+              <p>
+                "Working with K U SACHETH was an absolute pleasure. The attention to detail and technical expertise exceeded our expectations. The BMI calculator he developed is now a core part of our health platform."
+              </p>
+              <div class="testimonial-content">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" class="testimonial-img" alt="">
+                <div>
+                  <h3>John Smith</h3>
+                  <h4>CEO, HealthTech Inc.</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="testimonial-item">
+              <div class="stars">
+                <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              </div>
+              <p>
+                "G-LABS delivered our portfolio website on time and within budget. The design is modern, responsive, and perfectly captures our brand identity. I highly recommend their services."
+              </p>
+              <div class="testimonial-content">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=200&q=80" class="testimonial-img" alt="">
+                <div>
+                  <h3>Sarah Johnson</h3>
+                  <h4>Marketing Director, Creative Agency</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Testimonials Section -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+      <div class="container section-title">
+        <h2>Contact</h2>
+        <p>Get in touch with me</p>
+      </div>
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-5">
+            <div class="info-wrap">
+              <div class="info-item d-flex">
+                <i class="bi bi-geo-alt flex-shrink-0"></i>
+                <div>
+                  <h3>Location</h3>
+                  <p>Bangalore, India</p>
+                </div>
+              </div>
+              <div class="info-item d-flex">
+                <i class="bi bi-telephone flex-shrink-0"></i>
+                <div>
+                  <h3>Call Me</h3>
+                  <p>+91 1234567890</p>
+                </div>
+              </div>
+              <div class="info-item d-flex">
+                <i class="bi bi-envelope flex-shrink-0"></i>
+                <div>
+                  <h3>Email Me</h3>
+                  <p>contact@glabs.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <form action="#" method="post" class="php-email-form">
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <label for="name-field" class="pb-2">Your Name</label>
+                  <input type="text" name="name" id="name-field" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="email-field" class="pb-2">Your Email</label>
+                  <input type="email" class="form-control" name="email" id="email-field" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="subject-field" class="pb-2">Subject</label>
+                  <input type="text" class="form-control" name="subject" id="subject-field" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="message-field" class="pb-2">Message</label>
+                  <textarea class="form-control" name="message" rows="10" id="message-field" required></textarea>
+                </div>
+                <div class="col-md-12 text-center">
+                  <div class="loading">Loading</div>
+                  <div class="error-message"></div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <button type="submit">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section><!-- /Contact Section -->
+  </main>
+
+  <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <h1>G-LABS</h1>
+          </a>
+          <p class="mt-3">Innovation and development at its finest. Creating digital solutions that make a difference.</p>
+          <div class="social-links d-flex mt-4">
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>Bangalore, India</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+91 1234567890</span></p>
+          <p><strong>Email:</strong> <span>contact@glabs.com</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="container copyright text-center mt-4">
+      <p>&copy; <span>Copyright</span> <strong class="px-1">G-LABS</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="#">K U SACHETH</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Custom JS -->
   <script>
-    document.getElementById('bmiForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const height = parseFloat(document.getElementById('height').value) / 100;
-      const weight = parseFloat(document.getElementById('weight').value);
-
-      if (height > 0 && weight > 0) {
-        const bmi = (weight / (height * height)).toFixed(1);
-        let category = "";
-
-        if (bmi < 18.5) category = "Underweight";
-        else if (bmi < 24.9) category = "Normal weight";
-        else if (bmi < 29.9) category = "Overweight";
-        else category = "Obese";
-
-        document.getElementById('bmiResult').textContent = `Your BMI: ${bmi}`;
-        document.getElementById('bmiCategory').textContent = `Category: ${category}`;
-      } else {
-        alert("Please enter valid numbers for height and weight.");
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animated text effect
+      const animatedText = document.querySelector('.animated-text');
+      const texts = ['G-LABS', 'INNOVATION', 'DEVELOPMENT'];
+      let textIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      let typingSpeed = 150;
+      
+      function typeText() {
+        const currentText = texts[textIndex];
+        
+        if (isDeleting) {
+          animatedText.textContent = currentText.substring(0, charIndex - 1);
+          charIndex--;
+          typingSpeed = 100;
+        } else {
+          animatedText.textContent = currentText.substring(0, charIndex + 1);
+          charIndex++;
+          typingSpeed = 150;
+        }
+        
+        if (!isDeleting && charIndex === currentText.length) {
+          typingSpeed = 2000;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          typingSpeed = 500;
+        }
+        
+        setTimeout(typeText, typingSpeed);
       }
+      
+      typeText();
+      
+      // Skills animation
+      let skillBars = document.querySelectorAll('.progress-bar');
+      
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const skillObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let skillBar = entry.target;
+            let skillValue = skillBar.parentElement.previousElementSibling.querySelector('.val').textContent;
+            skillBar.style.width = skillValue;
+            skillObserver.unobserve(skillBar);
+          }
+        });
+      }, observerOptions);
+      
+      skillBars.forEach(bar => {
+        skillObserver.observe(bar);
+      });
+      
+      // Counter animation
+      let counters = document.querySelectorAll('.counter-value');
+      let counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let counter = entry.target;
+            let target = parseInt(counter.textContent);
+            let count = 0;
+            let increment = target / 50;
+            
+            let updateCounter = () => {
+              count += increment;
+              if (count < target) {
+                counter.textContent = Math.ceil(count);
+                setTimeout(updateCounter, 30);
+              } else {
+                counter.textContent = target;
+              }
+            };
+            
+            updateCounter();
+            counterObserver.unobserve(counter);
+          }
+        });
+      }, observerOptions);
+      
+      counters.forEach(counter => {
+        counterObserver.observe(counter);
+      });
+      
+      // Portfolio filter
+      let portfolioFilters = document.querySelectorAll('.portfolio-filters li');
+      let portfolioItems = document.querySelectorAll('.portfolio-item');
+      
+      portfolioFilters.forEach(filter => {
+        filter.addEventListener('click', function() {
+          portfolioFilters.forEach(el => el.classList.remove('filter-active'));
+          this.classList.add('filter-active');
+          
+          let filterValue = this.getAttribute('data-filter');
+          
+          portfolioItems.forEach(item => {
+            if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
+              item.style.display = 'block';
+            } else {
+              item.style.display = 'none';
+            }
+          });
+        });
+      });
+      
+      // Header scroll effect
+      window.addEventListener('scroll', function() {
+        const header = document.getElementById('header');
+        if (window.scrollY > 100) {
+          header.classList.add('sticked');
+        } else {
+          header.classList.remove('sticked');
+        }
+      });
+      
+      // Mobile navigation toggle
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const navmenu = document.querySelector('.navmenu ul');
+      
+      mobileNavToggle.addEventListener('click', function() {
+        navmenu.classList.toggle('active');
+        this.classList.toggle('bi-list');
+        this.classList.toggle('bi-x');
+      });
+      
+      // Close mobile nav when clicking on a link
+      document.querySelectorAll('.navmenu a').forEach(link => {
+        link.addEventListener('click', function() {
+          navmenu.classList.remove('active');
+          mobileNavToggle.classList.add('bi-list');
+          mobileNavToggle.classList.remove('bi-x');
+        });
+      });
+      
+      // Scroll top button
+      const scrollTop = document.getElementById('scroll-top');
+      
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+          scrollTop.classList.add('active');
+        } else {
+          scrollTop.classList.remove('active');
+        }
+      });
+      
+      scrollTop.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Preloader
+      const preloader = document.getElementById('preloader');
+      if (preloader) {
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            preloader.style.opacity = '0';
+            setTimeout(function() {
+              preloader.style.display = 'none';
+            }, 500);
+          }, 1000);
+        });
+      }
+      
+      // Form submission
+      const contactForm = document.querySelector('.php-email-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Show loading state
+          const loading = contactForm.querySelector('.loading');
+          const errorMessage = contactForm.querySelector('.error-message');
+          const sentMessage = contactForm.querySelector('.sent-message');
+          
+          loading.style.display = 'block';
+          errorMessage.style.display = 'none';
+          sentMessage.style.display = 'none';
+          
+          // Simulate form submission
+          setTimeout(function() {
+            loading.style.display = 'none';
+            sentMessage.style.display = 'block';
+            contactForm.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(function() {
+              sentMessage.style.display = 'none';
+            }, 5000);
+          }, 1500);
+        });
+      }
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            const headerOffset = 80;
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     });
   </script>
-
 </body>
 </html>
